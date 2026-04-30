@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استعادة النسخة الاحتياطية - الأعيب</title>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: #0f0f1a; color: #e0e0e0; text-align: center; padding: 40px; }
+        .container { max-width: 500px; margin: 0 auto; background: #1a1a2e; padding: 32px; border-radius: 16px; border: 1px solid #2a2a40; }
+        h1 { color: #6c5ce7; margin-bottom: 16px; }
+        textarea { width: 100%; height: 200px; background: #0a0a14; color: #e0e0e0; border: 1px solid #2a2a40; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 12px; direction: ltr; }
+        .btn { padding: 12px 28px; border-radius: 8px; border: none; cursor: pointer; font-weight: 700; margin: 8px; font-size: 14px; }
+        .btn-restore { background: #6c5ce7; color: #fff; }
+        .btn-export { background: #00cec9; color: #000; }
+        .status { margin: 16px 0; padding: 10px; border-radius: 8px; display: none; }
+        .status.success { background: #2ecc7120; color: #2ecc71; display: block; }
+        .status.error { background: #e74c3c20; color: #e74c3c; display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💾 استعادة النسخة الاحتياطية</h1>
+        <p style="color:#999;margin-bottom:20px">في حالة ضياع البيانات، تقدر تستعيدها من أي نسخة احتياطية حفظتها قبل كده</p>
+        
+        <button class="btn btn-export" onclick="exportCurrentData()">📥 تحميل نسخة احتياطية دلوقتي</button>
+        
+        <h3 style="margin-top:28px">📤 استعادة من نسخة سابقة</h3>
+        <textarea id="backupInput" placeholder="حط محتوى ملف JSON هنا..."></textarea>
+        <br>
+        <button class="btn btn-restore" onclick="restoreData()">🔄 استعادة البيانات</button>
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        function exportCurrentData() {
+            const data = localStorage.getItem('ala3eb_data');
+            if (!data) { alert('لا توجد بيانات حالياً'); return; }
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = `ala3eb_backup_${Date.now()}.json`;
+            a.click(); URL.revokeObjectURL(url);
+        }
+
+        function restoreData() {
+            const input = document.getElementById('backupInput').value.trim();
+            const status = document.getElementById('status');
+            if (!input) { status.className = 'status error'; status.textContent = '❌ حط بيانات JSON الأول'; return; }
+            try {
+                const data = JSON.parse(input);
+                localStorage.setItem('ala3eb_data', JSON.stringify(data));
+                status.className = 'status success';
+                status.textContent = '✅ تم استعادة البيانات بنجاح! روح على الصفحة الرئيسية';
+            } catch(e) {
+                status.className = 'status error';
+                status.textContent = '❌ البيانات مش بصيغة JSON صحيحة';
+            }
+        }
+    </script>
+</body>
+</html>

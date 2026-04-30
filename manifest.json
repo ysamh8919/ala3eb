@@ -1,0 +1,26 @@
+{
+    "name": "الأعيب - ألعاب وتطبيقات",
+    "short_name": "الأعيب",
+    "description": "حمل أحدث الألعاب والتطبيقات مجاناً - الأفضل في التحميل",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0f0f1a",
+    "theme_color": "#6c5ce7",
+    "icons": [
+        {
+            "src": "https://via.placeholder.com/192x192/6c5ce7/ffffff?text=🎮",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "https://via.placeholder.com/512x512/6c5ce7/ffffff?text=🎮",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "lang": "ar",
+    "dir": "rtl"
+}
