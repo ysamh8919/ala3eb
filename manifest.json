@@ -1,26 +1,15 @@
 {
-    "name": "الأعيب - ألعاب وتطبيقات",
-    "short_name": "الأعيب",
-    "description": "حمل أحدث الألعاب والتطبيقات مجاناً - الأفضل في التحميل",
+    "name": "Royal Casino - الكازينو الملكي",
+    "short_name": "Royal Casino",
     "start_url": "/",
     "display": "standalone",
-    "orientation": "portrait",
-    "background_color": "#0f0f1a",
-    "theme_color": "#6c5ce7",
+    "background_color": "#0a0a0a",
+    "theme_color": "#d4af37",
     "icons": [
         {
-            "src": "https://via.placeholder.com/192x192/6c5ce7/ffffff?text=🎮",
+            "src": "https://via.placeholder.com/192x192/d4af37/000000?text=👑",
             "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "https://via.placeholder.com/512x512/6c5ce7/ffffff?text=🎮",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
+            "type": "image/png"
         }
-    ],
-    "lang": "ar",
-    "dir": "rtl"
+    ]
 }

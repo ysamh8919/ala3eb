@@ -1,888 +1,101 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأعيب - ألعاب وتطبيقات</title>
-    <meta name="description" content="موقع الأعيب - حمل أحدث الألعاب والتطبيقات مجاناً">
-    <meta name="theme-color" content="#6c5ce7">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-    
-    <style>
-        :root {
-            --bg: #0f0f1a;
-            --bg-card: #1a1a2e;
-            --bg-card-hover: #222240;
-            --primary: #6c5ce7;
-            --primary-light: #a29bfe;
-            --accent: #00cec9;
-            --text: #e0e0e0;
-            --text-light: #bbb;
-            --text-muted: #999;
-            --border: #2a2a40;
-            --danger: #e74c3c;
-            --success: #2ecc71;
-            --warning: #f39c12;
-            --new-badge: #ff6b6b;
-            --radius-sm: 8px;
-            --radius: 12px;
-            --radius-lg: 16px;
-            --shadow: 0 4px 24px rgba(0,0,0,0.5);
-            --shadow-hover: 0 8px 32px rgba(108,92,231,0.3);
-            --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Segoe UI', 'Cairo', Tahoma, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-            direction: rtl;
-        }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        .header {
-            background: rgba(15,15,26,0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0 16px;
-        }
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px;
-            gap: 12px;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: var(--text);
-            font-size: 24px;
-            font-weight: 800;
-            white-space: nowrap;
-        }
-        .logo span { color: var(--primary); }
-        .search-box { flex: 1; max-width: 400px; position: relative; }
-        .search-box input {
-            width: 100%;
-            padding: 10px 40px 10px 16px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text);
-            font-size: 14px;
-            transition: var(--transition);
-        }
-        .search-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(108,92,231,0.15); }
-        .search-box .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
-        .search-results {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            left: 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            margin-top: 6px;
-            max-height: 280px;
-            overflow-y: auto;
-            display: none;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-        .search-results.active { display: block; }
-        .search-results .item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            cursor: pointer;
-            transition: var(--transition);
-            border-bottom: 1px solid var(--border);
-        }
-        .search-results .item:last-child { border-bottom: none; }
-        .search-results .item:hover { background: var(--bg-card-hover); }
-        .search-results .item img {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-sm);
-            object-fit: cover;
-            background: var(--border);
-        }
-        .search-results .item .name { font-size: 14px; font-weight: 600; }
-        .search-results .item .badge {
-            font-size: 10px;
-            padding: 2px 8px;
-            border-radius: 20px;
-            background: var(--primary);
-            color: #fff;
-        }
-        .header-actions { display: flex; gap: 8px; }
-        .btn-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text);
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            text-decoration: none;
-            position: relative;
-        }
-        .btn-icon:hover { background: var(--bg-card-hover); border-color: var(--primary); }
-        .btn-icon .count {
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            background: var(--danger);
-            color: #fff;
-            font-size: 10px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-        .nav {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-        .nav::-webkit-scrollbar { display: none; }
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            gap: 4px;
-            padding: 0 16px;
-        }
-        .nav a {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 12px 18px;
-            text-decoration: none;
-            color: var(--text-light);
-            font-size: 14px;
-            font-weight: 600;
-            border-bottom: 2px solid transparent;
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-        .nav a:hover, .nav a.active { color: var(--primary-light); border-bottom-color: var(--primary); }
-        .main { max-width: 1200px; margin: 0 auto; padding: 24px 16px; min-height: 60vh; }
-        .section { margin-bottom: 36px; }
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .section-title {
-            font-size: 22px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .section-title .icon { font-size: 24px; }
-        .section-title .count {
-            font-size: 12px;
-            background: var(--primary);
-            color: #fff;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        .see-all {
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        .see-all:hover { color: var(--primary-light); }
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        .filter-chip {
-            padding: 8px 16px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text-light);
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: var(--transition);
-            white-space: nowrap;
-            user-select: none;
-        }
-        .filter-chip:hover, .filter-chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 16px;
-        }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; } }
-        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } }
-        .card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            overflow: hidden;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            border: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-        }
-        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary); }
-        .card-img {
-            position: relative;
-            aspect-ratio: 1/1;
-            overflow: hidden;
-            background: var(--border);
-        }
-        .card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-        .card:hover .card-img img { transform: scale(1.05); }
-        .card-badges {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            z-index: 2;
-        }
-        .badge-new {
-            background: var(--new-badge);
-            color: #fff;
-            font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-            animation: pulse 2s infinite;
-        }
-        .badge-featured {
-            background: var(--warning);
-            color: #000;
-            font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-        .badge-size {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            background: rgba(0,0,0,0.75);
-            color: #fff;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            z-index: 2;
-        }
-        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.7;} }
-        .card-body { padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
-        .card-title {
-            font-size: 14px;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .card-meta {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--text-muted);
-            flex-wrap: wrap;
-        }
-        .card-meta .rating { color: var(--warning); font-weight: 700; }
-        .card-meta .downloads { color: var(--text-muted); }
-        .card-actions { display: flex; gap: 6px; margin-top: auto; padding-top: 6px; }
-        .btn-download {
-            flex: 1;
-            padding: 8px 12px;
-            border-radius: var(--radius-sm);
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 700;
-            text-align: center;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-        .btn-download:hover { background: #5a4bd1; }
-        .btn-fav {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-sm);
-            background: var(--bg-card-hover);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 16px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .btn-fav:hover, .btn-fav.liked { color: var(--danger); border-color: var(--danger); }
-        .top-list { counter-reset: top-counter; }
-        .top-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            margin-bottom: 8px;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: var(--transition);
-            counter-increment: top-counter;
-        }
-        .top-item:hover { border-color: var(--primary); background: var(--bg-card-hover); }
-        .top-item::before {
-            content: counter(top-counter);
-            font-size: 18px;
-            font-weight: 900;
-            color: var(--primary);
-            min-width: 32px;
-            text-align: center;
-        }
-        .top-item:nth-child(1)::before { color: gold; font-size: 22px; }
-        .top-item:nth-child(2)::before { color: silver; font-size: 20px; }
-        .top-item:nth-child(3)::before { color: #cd7f32; font-size: 20px; }
-        .top-item img {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-sm);
-            object-fit: cover;
-            background: var(--border);
-        }
-        .top-item .info { flex: 1; }
-        .top-item .name { font-weight: 700; font-size: 15px; }
-        .top-item .dl { font-size: 12px; color: var(--text-muted); }
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-            margin-top: 28px;
-            flex-wrap: wrap;
-        }
-        .pagination button {
-            min-width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text);
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        .pagination button:hover:not(:disabled) { border-color: var(--primary); }
-        .pagination button.active { background: var(--primary); border-color: var(--primary); }
-        .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 20px;
-            transition: var(--transition);
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 15px;
-        }
-        .back-btn:hover { color: var(--accent); }
-        .detail-header {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 24px;
-        }
-        .detail-img {
-            width: 200px;
-            height: 200px;
-            border-radius: var(--radius-lg);
-            object-fit: cover;
-            background: var(--border);
-            flex-shrink: 0;
-        }
-        @media (max-width: 600px) {
-            .detail-header { justify-content: center; text-align: center; }
-            .detail-img { width: 160px; height: 160px; }
-        }
-        .detail-info { flex: 1; min-width: 200px; }
-        .detail-name { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
-        .detail-meta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        .detail-meta span {
-            background: var(--bg-card);
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            border: 1px solid var(--border);
-        }
-        .detail-desc { color: var(--text-light); line-height: 1.8; margin-bottom: 20px; }
-        .detail-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-        .detail-actions .btn-download { padding: 12px 28px; font-size: 15px; }
-        .detail-servers {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-        .server-btn {
-            padding: 10px 18px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text);
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        .server-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .empty-state {
-            text-align: center;
-            padding: 48px 16px;
-            color: var(--text-muted);
-        }
-        .empty-state .emoji { font-size: 64px; display: block; margin-bottom: 16px; }
-        .empty-state .msg { font-size: 18px; }
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-card);
-            color: var(--text);
-            padding: 12px 24px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            z-index: 9999;
-            font-weight: 600;
-            box-shadow: var(--shadow);
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-        .toast.show { opacity: 1; visibility: visible; }
-        footer {
-            text-align: center;
-            padding: 24px 16px;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-        footer a { color: var(--accent); text-decoration: none; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Royal Casino | الكازينو الملكي</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-    <div class="toast" id="toast"></div>
+    <!-- شاشة التحميل -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="crown-spin">👑</div>
+            <h1 class="splash-title">Royal Casino</h1>
+            <div class="loading-bar">
+                <div class="loading-fill" id="loadingFill"></div>
+            </div>
+        </div>
+    </div>
 
+    <!-- الأصوات -->
+    <audio id="sound-spin" preload="auto" src="sounds/spin.mp3"></audio>
+    <audio id="sound-win" preload="auto" src="sounds/win.mp3"></audio>
+    <audio id="sound-click" preload="auto" src="sounds/click.mp3"></audio>
+    <audio id="sound-coins" preload="auto" src="sounds/coins.mp3"></audio>
+
+    <!-- الهيدر -->
     <header class="header">
-        <div class="header-inner">
-            <a href="#home" class="logo" data-nav="home">🎮 <span>الأعيب</span></a>
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="ابحث عن لعبة أو تطبيق..." autocomplete="off">
-                <div class="search-results" id="searchResults"></div>
-            </div>
-            <div class="header-actions">
-                <a href="#favorites" class="btn-icon" data-nav="favorites" title="المفضلة">❤️<span class="count" id="favCount" style="display:none">0</span></a>
-            </div>
+        <div class="logo">👑 Royal Casino</div>
+        <div class="coins-badge" id="coinsBadge">
+            <span class="coin-icon">🪙</span>
+            <span id="coinsDisplay">1000</span>
+            <span class="plus-btn" id="addCoinsBtn">+</span>
         </div>
     </header>
 
-    <nav class="nav">
-        <div class="nav-inner">
-            <a href="#home" data-nav="home" class="active">🏠 الرئيسية</a>
-            <a href="#games" data-nav="games">🎮 ألعاب</a>
-            <a href="#apps" data-nav="apps">📱 تطبيقات</a>
-            <a href="#new" data-nav="new">🆕 جديد</a>
-            <a href="#best" data-nav="best">⭐ الأفضل</a>
-            <a href="#lightweight" data-nav="lightweight">⚡ خفيفة</a>
-            <a href="#online" data-nav="online">🌐 أونلاين</a>
-            <a href="#offline" data-nav="offline">📴 أوفلاين</a>
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content" id="mainContent">
+        <!-- الأقسام -->
+        <section class="section">
+            <h2 class="section-title"><span class="icon">🔥</span> الألعاب</h2>
+            <div class="games-grid" id="gamesGrid">
+                <!-- تتولد بالجافاسكريبت -->
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><span class="icon">🏆</span> أفضل اللاعبين</h2>
+            <div class="leaderboard-mini" id="leaderboardMini">
+                <!-- تتولد بالجافاسكريبت -->
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><span class="icon">🎁</span> المكافآت اليومية</h2>
+            <div class="daily-reward" id="dailyReward">
+                <button class="btn btn-gold" id="claimRewardBtn">🎁 استلم مكافأتك اليومية</button>
+                <p class="reward-timer" id="rewardTimer"></p>
+            </div>
+        </section>
+    </main>
+
+    <!-- مودال اللعبة -->
+    <div class="modal-overlay" id="gameModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- محتوى اللعبة بيتحمل هنا -->
+            </div>
+            <div class="modal-footer">
+                <div class="bet-controls">
+                    <label>الرهان:</label>
+                    <input type="range" id="betSlider" min="10" max="500" value="50" step="10">
+                    <span id="betAmount">50</span> 🪙
+                </div>
+                <button class="btn btn-gold btn-lg" id="playBtn">🎰 العب</button>
+            </div>
         </div>
-    </nav>
+    </div>
 
-    <main class="main" id="mainContent"></main>
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
 
-    <footer>
-        <p>© 2025 <a href="#home">الأعيب</a> - جميع الحقوق محفوظة</p>
+    <!-- الفوتر -->
+    <footer class="footer">
+        <p>© 2025 Royal Casino | للمتعة فقط - عملات وهمية</p>
     </footer>
 
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDcZL0hGy8W2eA1bS2gzggyeLDGCM_Vb0c",
-            authDomain: "ala3eb.firebaseapp.com",
-            databaseURL: "https://ala3eb-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "ala3eb",
-            storageBucket: "ala3eb.firebasestorage.app",
-            messagingSenderId: "561106669781",
-            appId: "1:561106669781:web:7f1d40c8587e123aa2d25c"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        const APP = {
-            items: [], favorites: [], currentPage: 'home', currentFilter: 'all',
-            currentDetailId: null, itemsPerPage: 24, currentPageNum: 1,
-
-            init() {
-                this.loadFavorites();
-                this.loadData();
-                this.setupEventListeners();
-                window.addEventListener('hashchange', () => {
-                    this.navigate(window.location.hash.replace('#', '') || 'home');
-                });
-            },
-
-            loadData() {
-                db.ref('items').once('value').then(snapshot => {
-                    const data = snapshot.val();
-                    this.items = data ? Object.values(data) : [];
-                    this.navigate(this.currentPage);
-                }).catch(() => {
-                    const saved = localStorage.getItem('ala3eb_data');
-                    this.items = saved ? JSON.parse(saved) : [];
-                    this.navigate(this.currentPage);
-                });
-            },
-
-            saveData() {
-                const dataObj = {};
-                this.items.forEach(item => { dataObj[item.id] = item; });
-                db.ref('items').set(dataObj);
-                localStorage.setItem('ala3eb_data', JSON.stringify(this.items));
-            },
-
-            loadFavorites() {
-                const saved = localStorage.getItem('ala3eb_favorites');
-                this.favorites = saved ? JSON.parse(saved) : [];
-                this.updateFavCount();
-            },
-
-            saveFavorites() {
-                localStorage.setItem('ala3eb_favorites', JSON.stringify(this.favorites));
-                this.updateFavCount();
-            },
-
-            toggleFavorite(id) {
-                const index = this.favorites.indexOf(id);
-                if (index > -1) { this.favorites.splice(index, 1); this.showToast('تمت إزالة العنصر من المفضلة 💔'); }
-                else { this.favorites.push(id); this.showToast('تمت إضافة العنصر إلى المفضلة ❤️'); }
-                this.saveFavorites();
-                if (this.currentPage === 'favorites') this.renderFavorites();
-                if (this.currentDetailId) this.renderDetail(this.currentDetailId);
-            },
-
-            isFavorite(id) { return this.favorites.includes(id); },
-
-            updateFavCount() {
-                const countEl = document.getElementById('favCount');
-                if (this.favorites.length > 0) { countEl.style.display = 'flex'; countEl.textContent = this.favorites.length; }
-                else { countEl.style.display = 'none'; }
-            },
-
-            showToast(msg) {
-                const toast = document.getElementById('toast');
-                toast.textContent = msg; toast.classList.add('show');
-                clearTimeout(this._toastTimer);
-                this._toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
-            },
-
-            setupEventListeners() {
-                document.querySelectorAll('[data-nav]').forEach(link => {
-                    link.addEventListener('click', (e) => { e.preventDefault(); this.navigate(link.dataset.nav); });
-                });
-                const searchInput = document.getElementById('searchInput');
-                let searchDebounce;
-                searchInput.addEventListener('input', () => {
-                    clearTimeout(searchDebounce);
-                    const query = searchInput.value.trim();
-                    if (query.length >= 1) searchDebounce = setTimeout(() => this.searchItems(query), 250);
-                    else document.getElementById('searchResults').classList.remove('active');
-                });
-                document.addEventListener('click', (e) => {
-                    if (!document.querySelector('.search-box').contains(e.target)) {
-                        document.getElementById('searchResults').classList.remove('active');
-                    }
-                });
-            },
-
-            navigate(page) {
-                this.currentPage = page; this.currentFilter = 'all'; this.currentPageNum = 1; this.currentDetailId = null;
-                document.querySelectorAll('[data-nav]').forEach(link => link.classList.toggle('active', link.dataset.nav === page));
-                if (window.location.hash !== `#${page}`) history.pushState(null, null, `#${page}`);
-                document.getElementById('searchInput').value = '';
-                document.getElementById('searchResults').classList.remove('active');
-                const pages = { home: 'renderHome', games: 'renderCategory', apps: 'renderCategory', new: 'renderNew', best: 'renderBest', lightweight: 'renderLightweight', online: 'renderOnline', offline: 'renderOffline', favorites: 'renderFavorites' };
-                if (pages[page]) {
-                    if (page === 'games') this.renderCategory('game');
-                    else if (page === 'apps') this.renderCategory('app');
-                    else this[pages[page]]();
-                } else if (page.startsWith('detail-')) {
-                    this.renderDetail(parseInt(page.replace('detail-', '')));
-                } else this.renderHome();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            },
-
-            getFilteredItems(type = 'all', extraFilter = null) {
-                let items = [...this.items];
-                if (type === 'game') items = items.filter(i => i.category === 'game');
-                if (type === 'app') items = items.filter(i => i.category === 'app');
-                if (extraFilter === 'new') items = items.filter(i => i.isNew);
-                if (extraFilter === 'featured') items = items.filter(i => i.isFeatured);
-                if (extraFilter === 'lightweight') items = items.filter(i => i.size < 100);
-                if (extraFilter === 'online') items = items.filter(i => i.type === 'online');
-                if (extraFilter === 'offline') items = items.filter(i => i.type === 'offline');
-                return items;
-            },
-
-            sortItems(items, sortBy = 'downloads') {
-                if (sortBy === 'downloads') return items.sort((a, b) => b.downloads - a.downloads);
-                if (sortBy === 'rating') return items.sort((a, b) => b.rating - a.rating);
-                if (sortBy === 'newest') return items.sort((a, b) => b.id - a.id);
-                return items;
-            },
-
-            paginate(items, pageNum) {
-                const start = (pageNum - 1) * this.itemsPerPage;
-                return { items: items.slice(start, start + this.itemsPerPage), totalPages: Math.ceil(items.length / this.itemsPerPage), currentPage: pageNum, total: items.length };
-            },
-
-            renderPagination(totalPages, currentPage, containerId) {
-                if (totalPages <= 1) return '';
-                let html = '<div class="pagination">';
-                html += `<button ${currentPage===1?'disabled':''} onclick="APP.goToPage(${currentPage-1},'${containerId}')">«</button>`;
-                for (let i = 1; i <= totalPages; i++) html += `<button class="${i===currentPage?'active':''}" onclick="APP.goToPage(${i},'${containerId}')">${i}</button>`;
-                html += `<button ${currentPage===totalPages?'disabled':''} onclick="APP.goToPage(${currentPage+1},'${containerId}')">»</button></div>`;
-                return html;
-            },
-
-            goToPage(pageNum, containerId) { this.currentPageNum = pageNum; this[`render${containerId}`](); },
-
-            createCard(item) {
-                const sizeText = item.size < 1024 ? `${item.size}MB` : `${(item.size/1024).toFixed(1)}GB`;
-                const isLiked = this.isFavorite(item.id);
-                const stars = '⭐'.repeat(Math.round(item.rating));
-                return `<div class="card" onclick="APP.openDetail(${item.id})"><div class="card-img"><img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27><rect fill=%27%232a2a40%27 width=%27200%27 height=%27200%27/><text x=%2750%%27 y=%2750%%27 text-anchor=%27middle%27 dy=%27.3em%27 fill=%27%23999%27 font-size=%2740%27>🎮</text></svg>'"><div class="card-badges">${item.isNew?'<span class="badge-new">NEW</span>':''}${item.isFeatured?'<span class="badge-featured">🔥 مميز</span>':''}</div><span class="badge-size">📦 ${sizeText}</span></div><div class="card-body"><div class="card-title">${item.name}</div><div class="card-meta"><span class="rating">${stars} ${item.rating.toFixed(1)}</span><span class="downloads">⬇️ ${this.formatNumber(item.downloads)}</span></div><div class="card-actions" onclick="event.stopPropagation()"><button class="btn-download" onclick="APP.downloadItem(${item.id})">⬇️ تحميل</button><button class="btn-fav ${isLiked?'liked':''}" onclick="APP.toggleFavorite(${item.id})">${isLiked?'❤️':'🤍'}</button></div></div></div>`;
-            },
-
-            formatNumber(num) {
-                if (num >= 1000000) return (num/1000000).toFixed(1)+'M';
-                if (num >= 1000) return (num/1000).toFixed(1)+'K';
-                return num.toString();
-            },
-
-            renderHome() {
-                const main = document.getElementById('mainContent');
-                if (this.items.length === 0) { main.innerHTML = `<div class="empty-state"><span class="emoji">📭</span><span class="msg">لا توجد بيانات حالياً.<br>أضف ألعاب وتطبيقات من <a href="admin.html" style="color:var(--accent)">لوحة التحكم</a>.</span></div>`; return; }
-                let html = '';
-                const featured = this.getFilteredItems('all','featured').slice(0,6);
-                if(featured.length) html += `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">🔥</span> مميز</h2><a href="#best" class="see-all" data-nav="best">عرض الكل →</a></div><div class="grid">${featured.map(i=>this.createCard(i)).join('')}</div></section>`;
-                const newItems = this.getFilteredItems('all','new').slice(0,6);
-                if(newItems.length) html += `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">🆕</span> جديد <span class="count">${this.getFilteredItems('all','new').length}</span></h2><a href="#new" class="see-all" data-nav="new">عرض الكل →</a></div><div class="grid">${newItems.map(i=>this.createCard(i)).join('')}</div></section>`;
-                const topDl = this.sortItems([...this.items]).slice(0,10);
-                if(topDl.length) html += `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">📈</span> الأكثر تحميلاً</h2></div><div class="top-list">${topDl.map((item,i)=>`<div class="top-item" onclick="APP.openDetail(${item.id})"><img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'"><div class="info"><div class="name">${item.name}</div><div class="dl">⬇️ ${this.formatNumber(item.downloads)} تحميل</div></div><span style="color:var(--warning)">⭐ ${item.rating.toFixed(1)}</span></div>`).join('')}</div></section>`;
-                const topRated = this.sortItems([...this.items],'rating').slice(0,6);
-                if(topRated.length) html += `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">⭐</span> الأعلى تقييماً</h2></div><div class="grid">${topRated.map(i=>this.createCard(i)).join('')}</div></section>`;
-                const light = this.getFilteredItems('all','lightweight').slice(0,6);
-                if(light.length) html += `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">⚡</span> ألعاب خفيفة</h2><a href="#lightweight" class="see-all" data-nav="lightweight">عرض الكل →</a></div><div class="grid">${light.map(i=>this.createCard(i)).join('')}</div></section>`;
-                main.innerHTML = html;
-                this.rebindNavLinks();
-            },
-
-            renderCategory(type) { this.currentFilter = 'all'; this.renderCategoryPage(type); },
-
-            renderCategoryPage(type, filter = null) {
-                const main = document.getElementById('mainContent');
-                let items = this.getFilteredItems(type==='game'?'game':'app', filter);
-                const paginated = this.paginate(this.sortItems(items,'downloads'), this.currentPageNum);
-                if(items.length===0){main.innerHTML=`<div class="empty-state"><span class="emoji">📭</span><span class="msg">لا توجد عناصر هنا حالياً.</span></div>`;return;}
-                const typeLabel = type==='game'?'ألعاب':'تطبيقات';
-                const filtersHTML = type==='game'?`<div class="filters"><span class="filter-chip ${this.currentFilter==='all'?'active':''}" onclick="APP.setFilter('all')">الكل</span><span class="filter-chip ${this.currentFilter==='action'?'active':''}" onclick="APP.setFilter('action')">🔫 أكشن</span><span class="filter-chip ${this.currentFilter==='adventure'?'active':''}" onclick="APP.setFilter('adventure')">🗺️ مغامرات</span><span class="filter-chip ${this.currentFilter==='racing'?'active':''}" onclick="APP.setFilter('racing')">🏎️ سباق</span><span class="filter-chip ${this.currentFilter==='puzzle'?'active':''}" onclick="APP.setFilter('puzzle')">🧠 ذكاء</span><span class="filter-chip ${this.currentFilter==='fighting'?'active':''}" onclick="APP.setFilter('fighting')">👊 قتال</span><span class="filter-chip ${this.currentFilter==='horror'?'active':''}" onclick="APP.setFilter('horror')">🧟 رعب</span><span class="filter-chip ${this.currentFilter==='sports'?'active':''}" onclick="APP.setFilter('sports')">⚽ رياضة</span><span class="filter-chip ${this.currentFilter==='online'?'active':''}" onclick="APP.setFilter('online')">🌐 أونلاين</span><span class="filter-chip ${this.currentFilter==='offline'?'active':''}" onclick="APP.setFilter('offline')">📴 أوفلاين</span><span class="filter-chip ${this.currentFilter==='lightweight'?'active':''}" onclick="APP.setFilter('lightweight')">⚡ خفيفة</span><span class="filter-chip ${this.currentFilter==='medium'?'active':''}" onclick="APP.setFilter('medium')">📦 متوسطة</span><span class="filter-chip ${this.currentFilter==='heavy'?'active':''}" onclick="APP.setFilter('heavy')">💾 كبيرة</span></div>`:`<div class="filters"><span class="filter-chip ${this.currentFilter==='all'?'active':''}" onclick="APP.setFilter('all')">الكل</span><span class="filter-chip ${this.currentFilter==='tools'?'active':''}" onclick="APP.setFilter('tools')">🔧 أدوات</span><span class="filter-chip ${this.currentFilter==='photo'?'active':''}" onclick="APP.setFilter('photo')">📷 تعديل صور</span><span class="filter-chip ${this.currentFilter==='social'?'active':''}" onclick="APP.setFilter('social')">💬 سوشيال</span><span class="filter-chip ${this.currentFilter==='education'?'active':''}" onclick="APP.setFilter('education')">📚 تعليم</span></div>`;
-                main.innerHTML = `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">${type==='game'?'🎮':'📱'}</span> ${typeLabel} <span class="count">${items.length}</span></h2></div>${filtersHTML}<div class="grid">${paginated.items.map(i=>this.createCard(i)).join('')}</div>${this.renderPagination(paginated.totalPages,paginated.currentPage,'CategoryPage')}</section>`;
-                main.dataset.categoryType = type;
-            },
-
-            setFilter(filter) {
-                this.currentFilter = filter;
-                const type = document.getElementById('mainContent').dataset.categoryType || 'game';
-                this.renderCategoryPage(type, filter !== 'all' ? filter : null);
-            },
-
-            renderNew() {
-                const main = document.getElementById('mainContent');
-                const items = this.getFilteredItems('all','new');
-                const paginated = this.paginate(this.sortItems(items,'newest'), this.currentPageNum);
-                if(items.length===0){main.innerHTML=`<div class="empty-state"><span class="emoji">🆕</span><span class="msg">لا توجد عناصر جديدة حالياً.</span></div>`;return;}
-                main.innerHTML = `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">🆕</span> جديد <span class="count">${items.length}</span></h2></div><div class="grid">${paginated.items.map(i=>this.createCard(i)).join('')}</div>${this.renderPagination(paginated.totalPages,paginated.currentPage,'New')}</section>`;
-            },
-
-            renderBest() {
-                const main = document.getElementById('mainContent');
-                const items = this.items;
-                if(items.length===0){main.innerHTML=`<div class="empty-state"><span class="emoji">⭐</span><span class="msg">لا توجد عناصر حالياً.</span></div>`;return;}
-                const byDl = this.sortItems([...items],'downloads');
-                const byRt = this.sortItems([...items],'rating');
-                main.innerHTML = `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">⭐</span> الأفضل</h2></div><h3 style="margin:24px 0 12px;color:var(--text-light)">📈 الأكثر تحميلاً</h3><div class="top-list">${byDl.slice(0,10).map((item,i)=>`<div class="top-item" onclick="APP.openDetail(${item.id})"><img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'"><div class="info"><div class="name">${item.name}</div><div class="dl">⬇️ ${this.formatNumber(item.downloads)} تحميل</div></div><span>#${i+1}</span></div>`).join('')}</div><h3 style="margin:32px 0 12px;color:var(--text-light)">⭐ الأعلى تقييماً</h3><div class="grid">${byRt.slice(0,7).map(i=>this.createCard(i)).join('')}</div></section>`;
-            },
-
-            renderLightweight() {
-                const main = document.getElementById('mainContent');
-                const items = this.getFilteredItems('all','lightweight');
-                const paginated = this.paginate(items, this.currentPageNum);
-                if(items.length===0){main.innerHTML=`<div class="empty-state"><span class="emoji">⚡</span><span class="msg">لا توجد ألعاب خفيفة حالياً (أقل من 100MB).</span></div>`;return;}
-                main.innerHTML = `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">⚡</span> ألعاب خفيفة <span class="count">${items.length}</span></h2></div><p style="color:var(--text-muted);margin-bottom:16px">مناسبة للموبايلات الضعيفة 📱</p><div class="grid">${paginated.items.map(i=>this.createCard(i)).join('')}</div>${this.renderPagination(paginated.totalPages,paginated.currentPage,'Lightweight')}</section>`;
-            },
-
-            renderOnline() {
-                const main = document.getElementById('mainContent');
-                const items = this.getFilteredItems('game','online');
-                const paginated = this.paginate(items, this.currentPageNum);
-                if(items.length===0){main.innerHTML=`<div class="empty-state"><span class="emoji">🌐</span><span class="msg">لا توجد ألعاب أونلاين حالياً.</span></div>`;return;}
-                main.innerHTML = `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">🌐</span> ألعاب أونلاين <span class="count">${items.length}</span></h2></div><p style="color:var(--text-muted);margin-bottom:16px">تحتاج اتصال بالإنترنت 🖧</p><div class="grid">${paginated.items.map(i=>this.createCard(i)).join('')}</div>${this.renderPagination(paginated.totalPages,paginated.currentPage,'Online')}</section>`;
-            },
-
-            renderOffline() {
-                const main = document.getElementById('mainContent');
-                const items = this.getFilteredItems('game','offline');
-                const paginated = this.paginate(items, this.currentPageNum);
-                if(items.length===0){main.innerHTML=`<div class="empty-state"><span class="emoji">📴</span><span class="msg">لا توجد ألعاب أوفلاين حالياً.</span></div>`;return;}
-                main.innerHTML = `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">📴</span> ألعاب أوفلاين <span class="count">${items.length}</span></h2></div><p style="color:var(--text-muted);margin-bottom:16px">تعمل بدون إنترنت ✈️</p><div class="grid">${paginated.items.map(i=>this.createCard(i)).join('')}</div>${this.renderPagination(paginated.totalPages,paginated.currentPage,'Offline')}</section>`;
-            },
-
-            renderFavorites() {
-                const main = document.getElementById('mainContent');
-                const items = this.items.filter(item => this.favorites.includes(item.id));
-                if(items.length===0){main.innerHTML=`<div class="empty-state"><span class="emoji">💔</span><span class="msg">لم تضف أي عنصر للمفضلة بعد.</span></div>`;return;}
-                main.innerHTML = `<section class="section"><div class="section-header"><h2 class="section-title"><span class="icon">❤️</span> المفضلة <span class="count">${items.length}</span></h2></div><div class="grid">${items.map(i=>this.createCard(i)).join('')}</div></section>`;
-            },
-
-            openDetail(id) {
-                this.currentDetailId = id;
-                this.renderDetail(id);
-                history.pushState(null, null, `#detail-${id}`);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            },
-
-            renderDetail(id) {
-                const main = document.getElementById('mainContent');
-                const item = this.items.find(i => i.id === id);
-                if (!item) { main.innerHTML = `<div class="empty-state"><span class="emoji">🔍</span><span class="msg">العنصر غير موجود.</span><button class="back-btn mt-16" onclick="APP.navigate('home')">🏠 العودة للرئيسية</button></div>`; return; }
-                const isLiked = this.isFavorite(id);
-                const stars = '⭐'.repeat(Math.round(item.rating));
-                const sizeText = item.size < 1024 ? `${item.size} MB` : `${(item.size/1024).toFixed(1)} GB`;
-                const related = this.items.filter(i => i.id !== id && i.category === item.category).slice(0, 6);
-                main.innerHTML = `<button class="back-btn" onclick="history.back()">← رجوع</button><div class="detail-header"><img class="detail-img" src="${item.image}" alt="${item.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27><rect fill=%27%232a2a40%27 width=%27200%27 height=%27200%27/><text x=%2750%%27 y=%2750%%27 text-anchor=%27middle%27 dy=%27.3em%27 fill=%27%23999%27 font-size=%2740%27>🎮</text></svg>'"><div class="detail-info"><h1 class="detail-name">${item.name} ${item.isNew?'<span class="badge-new">NEW</span>':''}</h1><div class="detail-meta"><span>${stars} ${item.rating.toFixed(1)}</span><span>⬇️ ${this.formatNumber(item.downloads)} تحميل</span><span>📦 ${sizeText}</span><span>📱 إصدار ${item.version||'1.0'}</span><span>${item.category==='game'?'🎮':'📱'} ${item.type||'عام'}</span></div><p class="detail-desc">${item.description||'لا يوجد وصف.'}</p><div class="detail-actions"><button class="btn-download" onclick="APP.downloadItem(${item.id})">⬇️ تحميل الآن</button><button class="btn-fav ${isLiked?'liked':''}" style="width:48px;height:48px;font-size:20px" onclick="APP.toggleFavorite(${item.id});APP.renderDetail(${item.id})">${isLiked?'❤️':'🤍'}</button><button class="btn-icon" onclick="APP.shareItem(${item.id})" title="مشاركة">📤</button><button class="btn-icon" onclick="APP.copyLink(${item.id})" title="نسخ الرابط">🔗</button></div>${item.downloadLinks&&item.downloadLinks.length>0?`<div class="detail-servers"><span style="color:var(--text-muted);font-size:13px">سيرفرات التحميل:</span>${item.downloadLinks.map((link,i)=>`<button class="server-btn" onclick="APP.downloadFromServer('${link}')">🖥️ سيرفر ${i+1}</button>`).join('')}</div>`:''}</div></div>${related.length>0?`<section class="section" style="margin-top:36px"><h3 style="margin-bottom:16px">🔥 ${item.category==='game'?'ألعاب':'تطبيقات'} مشابهة</h3><div class="grid">${related.map(r=>this.createCard(r)).join('')}</div></section>`:''}`;
-            },
-
-            downloadItem(id) {
-                const item = this.items.find(i => i.id === id);
-                if (!item) return;
-                if (item.downloadLinks && item.downloadLinks.length > 0) {
-                    this.downloadFromServer(item.downloadLinks[0]);
-                } else { this.showToast('⚠️ رابط التحميل غير متوفر حالياً'); return; }
-                item.downloads++;
-                this.saveData();
-            },
-
-            downloadFromServer(url) {
-                this.showToast('⬇️ جاري التحميل...');
-                setTimeout(() => { window.open(url, '_blank'); }, 500);
-            },
-
-            shareItem(id) {
-                const url = `${window.location.origin}/#detail-${id}`;
-                if (navigator.share) navigator.share({ title: 'الأعيب', url: url }).catch(()=>{});
-                else this.copyLink(id);
-            },
-
-            copyLink(id) {
-                const url = `${window.location.origin}/#detail-${id}`;
-                navigator.clipboard.writeText(url).then(()=>this.showToast('📋 تم نسخ الرابط!')).catch(()=>this.showToast('⚠️ تعذر نسخ الرابط'));
-            },
-
-            searchItems(query) {
-                const resultsDiv = document.getElementById('searchResults');
-                if (!query) { resultsDiv.classList.remove('active'); return; }
-                const q = query.toLowerCase();
-                const results = this.items.filter(item => item.name.toLowerCase().includes(q) || (item.description&&item.description.toLowerCase().includes(q))).slice(0,8);
-                resultsDiv.innerHTML = results.length===0 ? '<div style="padding:14px;text-align:center;color:var(--text-muted)">لا توجد نتائج 🔍</div>' : results.map(item => `<div class="item" onclick="APP.openDetail(${item.id});document.getElementById('searchResults').classList.remove('active');document.getElementById('searchInput').value=''"><img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'"><span class="name">${item.name}</span><span class="badge">${item.category==='game'?'لعبة':'تطبيق'}</span></div>`).join('');
-                resultsDiv.classList.add('active');
-            },
-
-            rebindNavLinks() {
-                document.querySelectorAll('[data-nav]').forEach(link => {
-                    link.addEventListener('click', (e) => { e.preventDefault(); this.navigate(link.dataset.nav); });
-                });
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => APP.init());
-        console.log('🎮 موقع الأعيب جاهز | Firebase متصل');
-    </script>
+    <!-- السكربتات -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/sound-manager.js"></script>
+    <script src="js/coins-manager.js"></script>
+    <script src="js/games-data.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

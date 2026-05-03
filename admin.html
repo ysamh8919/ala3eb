@@ -1,369 +1,109 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - الأعيب</title>
+    <title>لوحة التحكم | Royal Casino</title>
     <meta name="robots" content="noindex, nofollow">
-    <style>
-        :root {
-            --bg: #0a0a14;
-            --bg-card: #141428;
-            --bg-input: #1a1a30;
-            --primary: #6c5ce7;
-            --accent: #00cec9;
-            --danger: #e74c3c;
-            --success: #2ecc71;
-            --text: #e0e0e0;
-            --text-muted: #999;
-            --border: #2a2a40;
-            --radius: 10px;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', 'Cairo', Tahoma, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        h1 { font-size: 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
-        h2 { font-size: 18px; margin: 24px 0 12px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
-        .btn {
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            border: none;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 14px;
-            transition: 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-primary { background: var(--primary); color: #fff; }
-        .btn-primary:hover { opacity: 0.9; }
-        .btn-danger { background: var(--danger); color: #fff; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-        .btn-outline:hover { border-color: var(--primary); }
-        .btn-sm { padding: 6px 14px; font-size: 12px; }
-        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
-        .form-group { display: flex; flex-direction: column; gap: 4px; }
-        .form-group.full { grid-column: 1 / -1; }
-        label { font-weight: 600; font-size: 13px; color: var(--text-muted); }
-        input, select, textarea {
-            padding: 10px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-input);
-            color: var(--text);
-            font-family: inherit;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
-        textarea { resize: vertical; min-height: 80px; }
-        .checkbox-group { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-        .checkbox-group label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th { text-align: right; padding: 10px; background: var(--bg-input); color: var(--text-muted); font-size: 11px; text-transform: uppercase; }
-        td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
-        tr:hover td { background: rgba(108,92,231,0.05); }
-        .toast {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: var(--bg-card); border: 1px solid var(--primary);
-            padding: 12px 24px; border-radius: 50px; z-index: 9999;
-            opacity: 0; visibility: hidden; transition: 0.3s; font-weight: 600;
-        }
-        .toast.show { opacity: 1; visibility: visible; }
-        .empty { text-align: center; padding: 40px; color: var(--text-muted); }
-        .counter { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-        .loading { text-align: center; padding: 20px; color: var(--text-muted); }
-        
-        .login-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.92);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 99999; backdrop-filter: blur(8px);
-        }
-        .login-box {
-            background: var(--bg-card); padding: 32px 24px;
-            border-radius: var(--radius); border: 1px solid var(--border);
-            text-align: center; max-width: 360px; width: 90%;
-        }
-        .login-box h2 { font-size: 28px; margin-bottom: 8px; }
-        .login-box .emoji { font-size: 48px; display: block; margin-bottom: 12px; }
-        .login-box input {
-            width: 100%; padding: 14px; margin: 12px 0;
-            border-radius: var(--radius); border: 1px solid var(--border);
-            background: var(--bg-input); color: var(--text);
-            font-size: 16px; text-align: center; direction: ltr;
-        }
-        .login-box input:focus { outline: none; border-color: var(--primary); }
-        .login-box .error { color: var(--danger); font-size: 13px; margin-top: 4px; display: none; }
-        .login-box .error.show { display: block; }
-    </style>
+    <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-
-    <div class="toast" id="toast"></div>
 
     <!-- شاشة تسجيل الدخول -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
-            <span class="emoji">🔐</span>
+            <span class="login-emoji">👑</span>
             <h2>لوحة التحكم</h2>
-            <p style="color:var(--text-muted);margin-bottom:8px">أدخل كلمة السر للمتابعة</p>
+            <p>Royal Casino</p>
             <input type="password" id="passwordInput" placeholder="كلمة السر" autocomplete="off">
-            <div class="error" id="loginError">❌ كلمة سر غير صحيحة</div>
-            <button class="btn btn-primary" onclick="checkPassword()" style="width:100%;margin-top:8px;justify-content:center">🔓 دخول</button>
+            <div class="login-error" id="loginError">❌ كلمة سر غير صحيحة</div>
+            <button class="btn btn-gold" onclick="Admin.checkPassword()">🔓 دخول</button>
         </div>
     </div>
 
-    <div class="header">
-        <h1>🔐 لوحة تحكم الأعيب</h1>
-        <div class="btn-group">
-            <a href="index.html" class="btn btn-outline btn-sm">🏠 الموقع</a>
-            <button class="btn btn-outline btn-sm" onclick="exportData()">💾 تصدير JSON</button>
-            <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">📥 استيراد JSON</button>
-            <button class="btn btn-danger btn-sm" onclick="clearAll()">🗑️ حذف الكل</button>
+    <!-- المحتوى الرئيسي -->
+    <div class="admin-container" id="adminContent" style="display:none">
+        <header class="admin-header">
+            <h1>👑 Royal Casino - لوحة التحكم</h1>
+            <div class="admin-actions">
+                <a href="index.html" class="btn btn-outline btn-sm">🏠 الموقع</a>
+                <button class="btn btn-outline btn-sm" onclick="Admin.exportData()">💾 تصدير</button>
+                <button class="btn btn-outline btn-sm" onclick="document.getElementById('importFile').click()">📥 استيراد</button>
+                <button class="btn btn-danger btn-sm" onclick="Admin.resetAll()">🗑️ حذف الكل</button>
+            </div>
+        </header>
+
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="Admin.importData(event)">
+
+        <!-- إحصائيات -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon">👥</span>
+                <span class="stat-value" id="totalPlayers">0</span>
+                <span class="stat-label">لاعبين</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🎮</span>
+                <span class="stat-value" id="totalGames">0</span>
+                <span class="stat-label">جولة</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🪙</span>
+                <span class="stat-value" id="totalCoins">0</span>
+                <span class="stat-label">عملات متداولة</span>
+            </div>
         </div>
-    </div>
 
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-
-    <div class="card">
-        <h2 id="formTitle">➕ إضافة عنصر جديد</h2>
-        <form id="addForm" onsubmit="addItem(event)">
+        <!-- التحكم في الألعاب -->
+        <div class="card">
+            <h2>🎰 إدارة الألعاب</h2>
             <div class="form-grid">
-                <div class="form-group"><label>اسم العنصر *</label><input type="text" id="name" required placeholder="مثال: PUBG Mobile"></div>
-                <div class="form-group"><label>رابط الصورة *</label><input type="url" id="image" required placeholder="https://example.com/image.jpg"></div>
-                <div class="form-group"><label>القسم *</label><select id="category" required><option value="game">🎮 لعبة</option><option value="app">📱 تطبيق</option></select></div>
-                <div class="form-group"><label>النوع / التصنيف</label><select id="type"><option value="action">أكشن</option><option value="adventure">مغامرات</option><option value="racing">سباق</option><option value="puzzle">ذكاء</option><option value="fighting">قتال</option><option value="horror">رعب</option><option value="sports">رياضة</option><option value="online">أونلاين</option><option value="offline">أوفلاين</option><option value="tools">أدوات</option><option value="photo">تعديل صور</option><option value="social">سوشيال</option><option value="education">تعليم</option><option value="other">أخرى</option></select></div>
-                <div class="form-group"><label>الحجم (MB)</label><input type="number" id="size" value="100" min="1"></div>
-                <div class="form-group"><label>الإصدار</label><input type="text" id="version" value="1.0"></div>
-                <div class="form-group full"><label>الوصف</label><textarea id="description" placeholder="وصف مختصر"></textarea></div>
-                <div class="form-group full"><label>روابط التحميل (رابط في كل سطر)</label><textarea id="downloadLinks" placeholder="https://mediafire.com/...&#10;https://mega.nz/..."></textarea><span class="counter">ارفع ملفات APK على MediaFire/MEGA وضع الرابط هنا</span></div>
-                <div class="form-group full checkbox-group"><label><input type="checkbox" id="isNew"> 🆕 جديد</label><label><input type="checkbox" id="isFeatured"> 🔥 مميز</label></div>
-                <input type="hidden" id="editId" value="">
+                <div class="form-group">
+                    <label>اسم اللعبة</label>
+                    <input type="text" id="gameName" placeholder="ماكينة السلوتس">
+                </div>
+                <div class="form-group">
+                    <label>الأيقونة (إيموجي)</label>
+                    <input type="text" id="gameIcon" placeholder="🎰">
+                </div>
+                <div class="form-group">
+                    <label>أقل رهان 🪙</label>
+                    <input type="number" id="gameMinBet" value="10" min="1">
+                </div>
+                <div class="form-group">
+                    <label>أكبر رهان 🪙</label>
+                    <input type="number" id="gameMaxBet" value="500" min="10">
+                </div>
+                <div class="form-group">
+                    <label>نوع اللعبة</label>
+                    <select id="gameType">
+                        <option value="حظ">حظ</option>
+                        <option value="مهارة">مهارة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>نسبة الفوز (%)</label>
+                    <input type="number" id="gameWinRate" value="45" min="1" max="99">
+                </div>
+                <div class="form-group full checkbox-group">
+                    <label><input type="checkbox" id="gameIsHot"> 🔥 ساخن</label>
+                </div>
                 <div class="form-group full">
-                    <button type="submit" class="btn btn-primary" id="submitBtn">✅ إضافة العنصر</button>
-                    <button type="button" class="btn btn-outline" id="cancelEdit" style="display:none" onclick="cancelEdit()">❌ إلغاء التعديل</button>
+                    <button class="btn btn-gold" onclick="Admin.updateSettings()">💾 حفظ الإعدادات</button>
                 </div>
             </div>
-        </form>
+        </div>
+
+        <!-- سجل اللاعبين -->
+        <div class="card">
+            <h2>📋 سجل اللاعبين</h2>
+            <div id="playersTable">جاري التحميل...</div>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>📋 كل العناصر (<span id="itemsCount">0</span>)</h2>
-        <div id="itemsTable"><div class="loading">⏳ جاري تحميل البيانات...</div></div>
-    </div>
+    <div class="toast" id="toast"></div>
 
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDcZL0hGy8W2eA1bS2gzggyeLDGCM_Vb0c",
-            authDomain: "ala3eb.firebaseapp.com",
-            databaseURL: "https://ala3eb-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "ala3eb",
-            storageBucket: "ala3eb.firebasestorage.app",
-            messagingSenderId: "561106669781",
-            appId: "1:561106669781:web:7f1d40c8587e123aa2d25c"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        const ADMIN_PASSWORD = "yaseN01207734039";
-
-        function checkPassword() {
-            const input = document.getElementById('passwordInput').value.trim();
-            const error = document.getElementById('loginError');
-            if (input === ADMIN_PASSWORD) {
-                document.getElementById('loginOverlay').style.display = 'none';
-                sessionStorage.setItem('ala3eb_admin_auth', 'true');
-                showToast('✅ تم تسجيل الدخول بنجاح');
-            } else {
-                error.classList.add('show');
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordInput').focus();
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('passwordInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
-            if (sessionStorage.getItem('ala3eb_admin_auth') === 'true') {
-                document.getElementById('loginOverlay').style.display = 'none';
-            }
-        });
-
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg; t.classList.add('show');
-            clearTimeout(window._tt);
-            window._tt = setTimeout(() => t.classList.remove('show'), 2500);
-        }
-
-        function getItems() {
-            return db.ref('items').once('value').then(snapshot => {
-                const data = snapshot.val();
-                return data ? Object.values(data) : [];
-            });
-        }
-
-        function saveItems(items) {
-            const dataObj = {};
-            items.forEach(item => { dataObj[item.id] = item; });
-            return db.ref('items').set(dataObj);
-        }
-
-        function getNextId() {
-            return getItems().then(items => items.length > 0 ? Math.max(...items.map(i => i.id)) + 1 : 1);
-        }
-
-        function renderTable() {
-            const container = document.getElementById('itemsTable');
-            container.innerHTML = '<div class="loading">⏳ جاري تحميل البيانات...</div>';
-            getItems().then(items => {
-                document.getElementById('itemsCount').textContent = items.length;
-                if (items.length === 0) {
-                    container.innerHTML = '<div class="empty">📭 لا توجد عناصر بعد.<br>أضف أول عنصر من النموذج أعلاه.</div>';
-                    return;
-                }
-                container.innerHTML = `<table><thead><tr><th>ID</th><th>صورة</th><th>الاسم</th><th>القسم</th><th>الحجم</th><th>تحميلات</th><th>إجراءات</th></tr></thead><tbody>${items.map(item => `<tr><td>${item.id}</td><td><img src="${item.image}" width="36" height="36" style="border-radius:6px;object-fit:cover;background:var(--border)" onerror="this.style.display='none'"></td><td>${item.name} ${item.isNew?'🆕':''} ${item.isFeatured?'🔥':''}</td><td>${item.category==='game'?'🎮 لعبة':'📱 تطبيق'}</td><td>${item.size} MB</td><td>⬇️ ${item.downloads||0}</td><td><div class="btn-group"><button class="btn btn-outline btn-sm" onclick="editItem(${item.id})">✏️ تعديل</button><button class="btn btn-danger btn-sm" onclick="deleteItem(${item.id})">🗑️ حذف</button></div></td></tr>`).join('')}</tbody></table>`;
-            });
-        }
-
-        function addItem(e) {
-            e.preventDefault();
-            const downloadLinksRaw = document.getElementById('downloadLinks').value.trim();
-            const downloadLinks = downloadLinksRaw ? downloadLinksRaw.split('\n').map(l => l.trim()).filter(l => l) : [];
-            const editId = document.getElementById('editId').value;
-            const itemData = {
-                name: document.getElementById('name').value.trim(),
-                image: document.getElementById('image').value.trim(),
-                category: document.getElementById('category').value,
-                type: document.getElementById('type').value,
-                size: parseInt(document.getElementById('size').value) || 100,
-                version: document.getElementById('version').value.trim() || '1.0',
-                description: document.getElementById('description').value.trim(),
-                downloadLinks: downloadLinks,
-                downloads: 0, rating: 0,
-                isNew: document.getElementById('isNew').checked,
-                isFeatured: document.getElementById('isFeatured').checked,
-                isTrending: false
-            };
-            if (editId) {
-                getItems().then(items => {
-                    const index = items.findIndex(i => i.id === parseInt(editId));
-                    if (index > -1) {
-                        itemData.id = parseInt(editId);
-                        itemData.downloads = items[index].downloads || 0;
-                        itemData.rating = items[index].rating || 0;
-                        items[index] = itemData;
-                        saveItems(items).then(() => { renderTable(); resetForm(); showToast('✅ تم تعديل العنصر بنجاح!'); });
-                    }
-                });
-            } else {
-                getNextId().then(nextId => {
-                    itemData.id = nextId;
-                    getItems().then(items => {
-                        items.push(itemData);
-                        saveItems(items).then(() => { renderTable(); resetForm(); showToast('✅ تمت إضافة العنصر بنجاح!'); });
-                    });
-                });
-            }
-        }
-
-        function editItem(id) {
-            getItems().then(items => {
-                const item = items.find(i => i.id === id);
-                if (!item) return;
-                document.getElementById('name').value = item.name;
-                document.getElementById('image').value = item.image;
-                document.getElementById('category').value = item.category;
-                document.getElementById('type').value = item.type || 'other';
-                document.getElementById('size').value = item.size;
-                document.getElementById('version').value = item.version || '1.0';
-                document.getElementById('description').value = item.description || '';
-                document.getElementById('downloadLinks').value = (item.downloadLinks || []).join('\n');
-                document.getElementById('isNew').checked = item.isNew || false;
-                document.getElementById('isFeatured').checked = item.isFeatured || false;
-                document.getElementById('editId').value = item.id;
-                document.getElementById('formTitle').textContent = '✏️ تعديل عنصر';
-                document.getElementById('submitBtn').textContent = '💾 حفظ التعديلات';
-                document.getElementById('cancelEdit').style.display = 'inline-flex';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-
-        function cancelEdit() { resetForm(); showToast('❌ تم إلغاء التعديل'); }
-
-        function resetForm() {
-            document.getElementById('addForm').reset();
-            document.getElementById('version').value = '1.0';
-            document.getElementById('size').value = '100';
-            document.getElementById('category').value = 'game';
-            document.getElementById('type').value = 'action';
-            document.getElementById('editId').value = '';
-            document.getElementById('formTitle').textContent = '➕ إضافة عنصر جديد';
-            document.getElementById('submitBtn').textContent = '✅ إضافة العنصر';
-            document.getElementById('cancelEdit').style.display = 'none';
-        }
-
-        function deleteItem(id) {
-            if (!confirm('⚠️ هل أنت متأكد من حذف هذا العنصر؟')) return;
-            getItems().then(items => {
-                const filtered = items.filter(i => i.id !== id);
-                saveItems(filtered).then(() => { renderTable(); showToast('🗑️ تم حذف العنصر بنجاح'); });
-            });
-        }
-
-        function exportData() {
-            getItems().then(items => {
-                const data = JSON.stringify(items, null, 2);
-                const blob = new Blob([data], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url; a.download = `ala3eb_backup_${Date.now()}.json`;
-                a.click(); URL.revokeObjectURL(url);
-                showToast('💾 تم تصدير البيانات بنجاح');
-            });
-        }
-
-        function importData(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                try {
-                    const data = JSON.parse(ev.target.result);
-                    if (!Array.isArray(data)) throw new Error('تنسيق غير صحيح');
-                    if (!confirm(`📥 استيراد ${data.length} عنصر؟ سيستبدل البيانات الحالية.`)) return;
-                    saveItems(data).then(() => { renderTable(); showToast(`📥 تم استيراد ${data.length} عنصر`); });
-                } catch(err) { showToast('❌ فشل الاستيراد - تأكد من الملف'); }
-            };
-            reader.readAsText(file);
-            e.target.value = '';
-        }
-
-        function clearAll() {
-            if (!confirm('⚠️ تحذير: حذف جميع العناصر نهائياً! متأكد؟')) return;
-            if (!confirm('تأكيد نهائي: سيتم حذف كل البيانات من السحابة.')) return;
-            saveItems([]).then(() => { renderTable(); showToast('🗑️ تم حذف جميع العناصر'); });
-        }
-
-        renderTable();
-        console.log('🔐 لوحة تحكم الأعيب جاهزة | Firebase متصل');
-    </script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/admin.js"></script>
 </body>
 </html>

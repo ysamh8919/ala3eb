@@ -1,0 +1,346 @@
+/* ==================== الأساسيات ==================== */
+:root {
+    --gold: #d4af37;
+    --gold-dark: #b8960f;
+    --gold-light: #f9d976;
+    --red: #c0392b;
+    --red-dark: #962d22;
+    --bg: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --card-border: #333;
+    --text: #eee;
+    --text-muted: #999;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow-gold: 0 0 20px rgba(212, 175, 55, 0.3);
+    --shadow-red: 0 0 20px rgba(192, 57, 43, 0.3);
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    background-image: 
+        radial-gradient(ellipse at 50% 0%, #1a1a0a 0%, #000 70%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+/* ==================== شاشة التحميل ==================== */
+.splash-screen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+.splash-screen.hidden { opacity: 0; visibility: hidden; }
+.splash-content { text-align: center; }
+.crown-spin {
+    font-size: 80px;
+    animation: crownSpin 1.5s ease-in-out infinite;
+}
+@keyframes crownSpin {
+    0%, 100% { transform: rotateY(0deg) scale(1); }
+    50% { transform: rotateY(180deg) scale(1.2); }
+}
+.splash-title {
+    font-size: 36px;
+    font-weight: 900;
+    background: linear-gradient(180deg, #f9d976, #b8960f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 16px 0;
+}
+.loading-bar {
+    width: 200px;
+    height: 4px;
+    background: #333;
+    border-radius: 2px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.loading-fill {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.3s;
+}
+
+/* ==================== الهيدر ==================== */
+.header {
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--gold-dark);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.logo {
+    font-size: 24px;
+    font-weight: 900;
+    background: linear-gradient(180deg, #f9d976, #e2b631);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.coins-badge {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid var(--gold);
+    padding: 8px 16px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 14px;
+}
+.coins-badge:active { transform: scale(0.95); }
+.plus-btn {
+    background: var(--gold);
+    color: #000;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+/* ==================== المحتوى الرئيسي ==================== */
+.main-content { padding: 20px 16px 80px; max-width: 800px; margin: 0 auto; }
+.section { margin-bottom: 32px; }
+.section-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold-light);
+}
+.section-title .icon { font-size: 24px; }
+
+/* ==================== شبكة الألعاب ==================== */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+@media (min-width: 600px) {
+    .games-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.game-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 20px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+.game-card:hover, .game-card:active {
+    border-color: var(--gold);
+    box-shadow: var(--shadow-gold);
+    transform: translateY(-2px);
+}
+.game-card .game-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 10px;
+}
+.game-card .game-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+}
+.game-card .game-type {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+.game-card .badge-hot {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: var(--red);
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* ==================== أفضل اللاعبين ==================== */
+.leaderboard-mini {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 12px;
+}
+.leader-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px;
+    border-bottom: 1px solid #222;
+}
+.leader-item:last-child { border-bottom: none; }
+.leader-rank {
+    font-size: 18px;
+    font-weight: 900;
+    min-width: 32px;
+    text-align: center;
+}
+.leader-rank.gold { color: var(--gold); }
+.leader-rank.silver { color: #c0c0c0; }
+.leader-rank.bronze { color: #cd7f32; }
+.leader-name { flex: 1; font-weight: 600; }
+.leader-coins { color: var(--gold); font-weight: 700; }
+
+/* ==================== المكافآت اليومية ==================== */
+.daily-reward {
+    background: linear-gradient(135deg, #1a1a0a, #0a0a00);
+    border: 1px solid var(--gold-dark);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+}
+.reward-timer { color: var(--text-muted); font-size: 13px; margin-top: 10px; }
+
+/* ==================== الأزرار ==================== */
+.btn {
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: var(--transition);
+    font-family: inherit;
+}
+.btn:active { transform: scale(0.95); }
+.btn-gold {
+    background: linear-gradient(180deg, #f9d976, #b8960f);
+    color: #000;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+.btn-red {
+    background: linear-gradient(180deg, #e74c3c, #962d22);
+    color: #fff;
+}
+.btn-lg { padding: 16px 32px; font-size: 18px; }
+
+/* ==================== المودال ==================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal-container {
+    background: #111;
+    border: 1px solid var(--gold-dark);
+    border-radius: var(--radius);
+    width: 95%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #222;
+}
+.modal-header h3 { color: var(--gold); }
+.modal-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-body { padding: 16px; min-height: 200px; }
+.modal-footer { padding: 16px; border-top: 1px solid #222; }
+.bet-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+.bet-controls label { color: var(--text-muted); font-size: 14px; }
+.bet-controls input[type="range"] { flex: 1; accent-color: var(--gold); }
+#betAmount { color: var(--gold); font-weight: 700; min-width: 40px; text-align: center; }
+
+/* ==================== Toast ==================== */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: var(--gold);
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: 1px solid var(--gold-dark);
+    z-index: 9999;
+    font-weight: 600;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+.toast.show { opacity: 1; visibility: visible; }
+
+/* ==================== الفوتر ==================== */
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid #111;
+}
