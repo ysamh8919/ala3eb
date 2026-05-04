@@ -3,99 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Royal Casino | الكازينو الملكي</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
-    <link rel="stylesheet" href="css/main.css">
+    <meta name="theme-color" content="#4A90E2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Daily Growth">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <title>Daily Growth - تطوير الذات</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-    <!-- شاشة التحميل -->
-    <div class="splash-screen" id="splashScreen">
+    <!-- شاشة البداية Splash Screen -->
+    <div id="splash-screen">
         <div class="splash-content">
-            <div class="crown-spin">👑</div>
-            <h1 class="splash-title">Royal Casino</h1>
-            <div class="loading-bar">
-                <div class="loading-fill" id="loadingFill"></div>
-            </div>
+            <div class="splash-icon">🌱</div>
+            <h1>Daily Growth</h1>
+            <p>رحلتك لتطوير الذات تبدأ الآن</p>
+            <div class="loader"></div>
         </div>
     </div>
 
-    <!-- الأصوات -->
-    <audio id="sound-spin" preload="auto" src="sounds/spin.mp3"></audio>
-    <audio id="sound-win" preload="auto" src="sounds/win.mp3"></audio>
-    <audio id="sound-click" preload="auto" src="sounds/click.mp3"></audio>
-    <audio id="sound-coins" preload="auto" src="sounds/coins.mp3"></audio>
-
-    <!-- الهيدر -->
-    <header class="header">
-        <div class="logo">👑 Royal Casino</div>
-        <div class="coins-badge" id="coinsBadge">
-            <span class="coin-icon">🪙</span>
-            <span id="coinsDisplay">1000</span>
-            <span class="plus-btn" id="addCoinsBtn">+</span>
-        </div>
-    </header>
-
-    <!-- المحتوى الرئيسي -->
-    <main class="main-content" id="mainContent">
-        <!-- الأقسام -->
-        <section class="section">
-            <h2 class="section-title"><span class="icon">🔥</span> الألعاب</h2>
-            <div class="games-grid" id="gamesGrid">
-                <!-- تتولد بالجافاسكريبت -->
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title"><span class="icon">🏆</span> أفضل اللاعبين</h2>
-            <div class="leaderboard-mini" id="leaderboardMini">
-                <!-- تتولد بالجافاسكريبت -->
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title"><span class="icon">🎁</span> المكافآت اليومية</h2>
-            <div class="daily-reward" id="dailyReward">
-                <button class="btn btn-gold" id="claimRewardBtn">🎁 استلم مكافأتك اليومية</button>
-                <p class="reward-timer" id="rewardTimer"></p>
-            </div>
-        </section>
-    </main>
-
-    <!-- مودال اللعبة -->
-    <div class="modal-overlay" id="gameModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 id="modalTitle"></h3>
-                <button class="modal-close" id="modalClose">✕</button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- محتوى اللعبة بيتحمل هنا -->
-            </div>
-            <div class="modal-footer">
-                <div class="bet-controls">
-                    <label>الرهان:</label>
-                    <input type="range" id="betSlider" min="10" max="500" value="50" step="10">
-                    <span id="betAmount">50</span> 🪙
+    <!-- التطبيق الرئيسي -->
+    <div id="app" style="display: none;">
+        
+        <!-- الشاشة الرئيسية -->
+        <div id="home-screen" class="screen active">
+            <header class="screen-header">
+                <h1>Daily Growth</h1>
+                <div class="header-points">
+                    <span>🌟</span>
+                    <span id="home-points">0</span>
                 </div>
-                <button class="btn btn-gold btn-lg" id="playBtn">🎰 العب</button>
+            </header>
+
+            <div class="screen-content">
+                <div class="date-card">
+                    <div class="date-icon">📅</div>
+                    <div class="date-info">
+                        <h2 id="current-date">الخميس 4 مايو 2026</h2>
+                        <p id="hijri-date">8 ذو القعدة 1447</p>
+                    </div>
+                </div>
+
+                <div class="progress-card">
+                    <h3>نسبة إنجاز اليوم</h3>
+                    <div class="progress-circle">
+                        <svg viewBox="0 0 36 36">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path id="progress-circle-fill" class="circle-fill" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <div class="progress-text">
+                            <span id="completion-percentage">0%</span>
+                        </div>
+                    </div>
+                    <p id="tasks-completed-text">0 من 0 مهام مكتملة</p>
+                </div>
+
+                <div class="level-card">
+                    <div class="level-header">
+                        <h3>المستوى الحالي</h3>
+                        <span id="level-badge" class="badge">مستوى 1</span>
+                    </div>
+                    <div class="level-progress">
+                        <div class="progress-bar">
+                            <div id="level-progress-fill" class="progress-fill"></div>
+                        </div>
+                        <span id="level-points-text">0/100 نقطة</span>
+                    </div>
+                </div>
+
+                <button class="add-task-btn" onclick="navigateTo('tasks')">
+                    <i class="fas fa-plus"></i>
+                    إضافة مهمة جديدة
+                </button>
+
+                <div class="stats-grid">
+                    <div class="mini-stat">
+                        <span class="mini-stat-icon">🔥</span>
+                        <span class="mini-stat-value" id="streak-count">0</span>
+                        <span class="mini-stat-label">يوم متتالي</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-stat-icon">✅</span>
+                        <span class="mini-stat-value" id="total-completed">0</span>
+                        <span class="mini-stat-label">مهمة مكتملة</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-stat-icon">🔄</span>
+                        <span class="mini-stat-value" id="habits-count">0</span>
+                        <span class="mini-stat-label">عادات</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شاشة المهام -->
+        <div id="tasks-screen" class="screen">
+            <header class="screen-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1>المهام</h1>
+                <button class="filter-btn" onclick="toggleFilter()">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </header>
+
+            <div class="screen-content">
+                <div class="filter-tabs" id="filter-tabs" style="display: none;">
+                    <button class="filter-tab active" onclick="filterTasks('all')">الكل</button>
+                    <button class="filter-tab" onclick="filterTasks('pending')">قيد الانتظار</button>
+                    <button class="filter-tab" onclick="filterTasks('completed')">مكتملة</button>
+                </div>
+
+                <div id="tasks-list" class="tasks-list"></div>
+
+                <div id="empty-tasks" class="empty-state">
+                    <div class="empty-icon">📝</div>
+                    <h3>لا توجد مهام</h3>
+                    <p>ابدأ بإضافة مهمتك الأولى</p>
+                </div>
+
+                <button class="fab" onclick="showAddTaskModal()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- شاشة العادات -->
+        <div id="habits-screen" class="screen">
+            <header class="screen-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1>العادات</h1>
+            </header>
+
+            <div class="screen-content">
+                <div id="habits-list" class="habits-list"></div>
+
+                <div id="empty-habits" class="empty-state">
+                    <div class="empty-icon">🔄</div>
+                    <h3>لا توجد عادات</h3>
+                    <p>أضف عادة يومية لتتبعها</p>
+                </div>
+
+                <button class="fab" onclick="showAddHabitModal()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- شاشة الإحصائيات -->
+        <div id="stats-screen" class="screen">
+            <header class="screen-header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <h1>الإحصائيات</h1>
+            </header>
+
+            <div class="screen-content">
+                <div class="stats-sections">
+                    <div class="stat-card">
+                        <h3>📊 ملخص الإنجازات</h3>
+                        <div class="stat-row">
+                            <span>المهام المكتملة</span>
+                            <span id="stats-completed">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>أيام متتالية</span>
+                            <span id="stats-streak">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>نسبة الإنجاز الأسبوعي</span>
+                            <span id="stats-weekly">0%</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>أكثر يوم إنتاجية</span>
+                            <span id="stats-best-day">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل السفلي -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="navigateTo('home')">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-btn" onclick="navigateTo('tasks')">
+                <i class="fas fa-tasks"></i>
+                <span>المهام</span>
+            </button>
+            <button class="nav-btn" onclick="navigateTo('habits')">
+                <i class="fas fa-redo"></i>
+                <span>العادات</span>
+            </button>
+            <button class="nav-btn" onclick="navigateTo('stats')">
+                <i class="fas fa-chart-bar"></i>
+                <span>الإحصائيات</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- نافذة إضافة مهمة -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة مهمة جديدة</h2>
+                <button class="close-modal" onclick="closeModal('task-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="task-text" placeholder="نص المهمة..." class="input-field">
+                
+                <label class="input-label">نوع المهمة:</label>
+                <div class="type-selector">
+                    <button class="type-btn" data-type="study" onclick="selectType('study')">
+                        <span>📚</span> دراسة
+                    </button>
+                    <button class="type-btn" data-type="sport" onclick="selectType('sport')">
+                        <span>⚽</span> رياضة
+                    </button>
+                    <button class="type-btn" data-type="worship" onclick="selectType('worship')">
+                        <span>🕌</span> عبادة
+                    </button>
+                    <button class="type-btn selected" data-type="personal" onclick="selectType('personal')">
+                        <span>👤</span> شخصي
+                    </button>
+                </div>
+
+                <label class="input-label">الوقت (اختياري):</label>
+                <input type="time" id="task-time" class="input-field">
+
+                <button class="submit-btn" onclick="addTask()">إضافة المهمة</button>
             </div>
         </div>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast"></div>
+    <!-- نافذة إضافة عادة -->
+    <div id="habit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة عادة جديدة</h2>
+                <button class="close-modal" onclick="closeModal('habit-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="habit-text" placeholder="اسم العادة..." class="input-field">
+                
+                <label class="input-label">التكرار:</label>
+                <div class="frequency-selector">
+                    <button class="freq-btn selected" data-freq="daily" onclick="selectFrequency('daily')">يومي</button>
+                    <button class="freq-btn" data-freq="weekly" onclick="selectFrequency('weekly')">أسبوعي</button>
+                </div>
 
-    <!-- الفوتر -->
-    <footer class="footer">
-        <p>© 2025 Royal Casino | للمتعة فقط - عملات وهمية</p>
-    </footer>
+                <button class="submit-btn" onclick="addHabit()">إضافة العادة</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- السكربتات -->
-    <script src="js/firebase-config.js"></script>
-    <script src="js/sound-manager.js"></script>
-    <script src="js/coins-manager.js"></script>
-    <script src="js/games-data.js"></script>
-    <script src="js/main.js"></script>
+    <!-- نافذة الإشعارات -->
+    <div id="notification-toast" class="toast">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/habits.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
